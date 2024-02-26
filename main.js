@@ -49,7 +49,7 @@ $(document).ready(function () {
         };
         $.ajax({
             url: 'http://127.0.0.1/submit.php',
-            type: 'GET',
+            type: 'POST',
             dataType: 'json',
             success: function (data) {
                 // Manipulez les données ici (exemple d'affichage dans la console)
