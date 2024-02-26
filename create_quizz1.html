@@ -53,10 +53,6 @@
             font-family: Arial, sans-serif;
         }
 
-        form {
-            color: black;
-        }
-
         #id_container {
             display: flex;
             justify-content: space-between;
@@ -72,12 +68,12 @@
         /* Ajout du style pour l'espace entre chaque question */
         .question-form:not(:first-child) {
             margin-top: 10px;
-            margin-bottom: 10px
+            margin-bottom: 10px;
         }
 
         #bouton {
             margin-top: 10px;
-            margin-bottom: 10px
+            margin-bottom: 10px;
         }
     </style>
 </head>
@@ -86,8 +82,10 @@
     <h1>QUIZZ</h1>
     <div id="questions-container">
         <form action="submit.php" method="post" class="question-form">
+            <label for="user_name">Votre nom :</label>
+            <input type="text" id="user_name" name="name"><br><br>
             <label for="question1">Votre premiere Question :</label>
-            <input type="text" id="question1" name="question"><br><br>
+            <input type="text" id="question1" name="questions[]"><br><br>
             <input type="radio" id="repA_1" name="rep_qts1" value="1">
             <label for="repA_1">""</label><br>
             <input type="radio" id="repB_1" name="rep_qts1" value="2">
@@ -100,16 +98,16 @@
     </div>
     <div id="bouton">
         <button id="add-question-btn">Ajouter une question au QCM</button>
-        <button id="validate-btn" style="display: none;">Valider le quizz</button>
+        <button id="validate-btn">Valider le quizz</button>
     </div>
     <script>
         var questionCounter = 1;
 
         $("#add-question-btn").on("click", function () {
             questionCounter++;
-            var newForm = `<form action="submit1.php" method="post" class="question-form">
+            var newForm = `<form action="submit.php" method="post" class="question-form">
                                 <label for="question${questionCounter}">Votre ${getOrdinal(questionCounter)} Question :</label>
-                                <input type="text" id="question${questionCounter}" name="question"><br><br>
+                                <input type="text" id="question${questionCounter}" name="questions[]"><br><br>
                                 <input type="radio" id="repA_${questionCounter}" name="rep_qts${questionCounter}" value="1">
                                 <label for="repA_${questionCounter}">""</label><br>
                                 <input type="radio" id="repB_${questionCounter}" name="rep_qts${questionCounter}" value="2">
@@ -125,8 +123,27 @@
             }
         });
 
+        $("#validate-btn").on("click", function () {
+            var userName = $("#user_name").val();
+            var formData = $(".question-form").serializeArray();
+            formData.push({ name: "name", value: name });
+
+            $.ajax({
+                type: "POST",
+                url: "submit.php",
+                data: formData,
+                success: function (response) {
+                    // Gérer la réponse du serveur si nécessaire
+                    console.log(response);
+                },
+                error: function (error) {
+                    console.log("Erreur AJAX : ", error);
+                }
+            });
+        });
+
         function getOrdinal(n) {
-            var s = ["eme", "er", "eme", "eme"],
+            var s = ["ème", "er", "ème", "ème"],
                 v = n % 100;
             return n + (s[(v - 20) % 10] || s[v] || s[0]);
         }
