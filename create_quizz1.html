@@ -128,19 +128,6 @@
             var userName = $("#user_name").val();
             var formData = $(".question-form").serializeArray();
             formData.push({ name: "name", value: name });
-
-            $.ajax({
-                type: "POST",
-                url: "submit.php",
-                data: formData,
-                success: function (response) {
-                    // Gérer la réponse du serveur si nécessaire
-                    console.log(response);
-                },
-                error: function (error) {
-                    console.log("Erreur AJAX : ", error);
-                }
-            });
         });
 
         function getOrdinal(n) {
