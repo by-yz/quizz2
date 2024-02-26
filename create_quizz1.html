@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Création de Quizz</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="main.js"></script>
+    <style>
+        body {
+            display: grid;
+            place-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow-y: auto;
+            background: linear-gradient(to bottom, #000033, #330066, #660099, #9900cc);
+            color: white;
+        }
+
+        form {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        label,
+        input[type="text"],
+        input[type="integer"],
+        input[type="radio"] {
+            margin-bottom: 5px;
+            margin-right: 5px;
+        }
+
+        input[type="radio"] {
+            margin-bottom: 5px;
+        }
+
+        button {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: white;
+            color: black;
+            cursor: pointer;
+        }
+
+        h1 {
+            font-family: Arial, sans-serif;
+        }
+
+        form {
+            color: black;
+        }
+
+        #id_container {
+            display: flex;
+            justify-content: space-between;
+            flex-direction: row;
+            align-items: center;
+        }
+
+        /* Ajout du style pour les choix de réponse sur la même ligne */
+        .question-form input[type="radio"] {
+            display: inline-block;
+        }
+
+        /* Ajout du style pour l'espace entre chaque question */
+        .question-form:not(:first-child) {
+            margin-top: 10px;
+            margin-bottom: 10px
+        }
+
+        #bouton {
+            margin-top: 10px;
+            margin-bottom: 10px
+        }
+    </style>
+</head>
+
+<body>
+    <h1>QUIZZ</h1>
+    <div id="questions-container">
+        <form action="submit.php" method="post" class="question-form">
+            <label for="question1">Votre premiere Question :</label>
+            <input type="text" id="question1" name="question"><br><br>
+            <input type="radio" id="repA_1" name="rep_qts1" value="1">
+            <label for="repA_1">""</label><br>
+            <input type="radio" id="repB_1" name="rep_qts1" value="2">
+            <label for="repB_1">""</label><br>
+            <input type="radio" id="repC_1" name="rep_qts1" value="3">
+            <label for="repC_1">""</label><br>
+            <input type="radio" id="repD_1" name="rep_qts1" value="4">
+            <label for="repD_1">""</label><br>
+        </form>
+    </div>
+    <div id="bouton">
+        <button id="add-question-btn">Ajouter une question au QCM</button>
+        <button id="validate-btn" style="display: none;">Valider le quizz</button>
+    </div>
+    <script>
+        var questionCounter = 1;
+
+        $("#add-question-btn").on("click", function () {
+            questionCounter++;
+            var newForm = `<form action="submit1.php" method="post" class="question-form">
+                                <label for="question${questionCounter}">Votre ${getOrdinal(questionCounter)} Question :</label>
+                                <input type="text" id="question${questionCounter}" name="question"><br><br>
+                                <input type="radio" id="repA_${questionCounter}" name="rep_qts${questionCounter}" value="1">
+                                <label for="repA_${questionCounter}">""</label><br>
+                                <input type="radio" id="repB_${questionCounter}" name="rep_qts${questionCounter}" value="2">
+                                <label for="repB_${questionCounter}">""</label><br>
+                                <input type="radio" id="repC_${questionCounter}" name="rep_qts${questionCounter}" value="3">
+                                <label for="repC_${questionCounter}">""</label><br>
+                                <input type="radio" id="repD_${questionCounter}" name="rep_qts${questionCounter}" value="4">
+                                <label for="repD_${questionCounter}">""</label><br>
+                            </form>`;
+            $("#questions-container").append(newForm);
+            if (questionCounter > 1) {
+                $("#validate-btn").show();
+            }
+        });
+
+        function getOrdinal(n) {
+            var s = ["eme", "er", "eme", "eme"],
+                v = n % 100;
+            return n + (s[(v - 20) % 10] || s[v] || s[0]);
+        }
+    </script>
+</body>
+
+</html>
