@@ -9,8 +9,7 @@ $(document).ready(function () {
             'valeur6': $("#question6").val(),
             'valeur7': $('#question7').val(),
             'valeur8': $("#question8").val(),
-            'valeur9': $("#question9").val(),
-            'valeur10': $('#name').val(),
+            'valeur9': $('#name').val(),
 
         };
         $.ajax({
