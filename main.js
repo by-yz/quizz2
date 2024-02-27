@@ -12,7 +12,7 @@ $(document).ready(function () {
             //'valeur9': $("#question9").val(),
             //'valeur': $('#name').val(),
 
-        };
+        )};
         $.ajax({
             url: 'http://127.0.0.1/submit.php',
             type: 'POST',
