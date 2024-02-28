@@ -4,9 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Création de Quizz</title>
+    <title>Creation de Quizz</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="main.js"></script>
+
+</head>
+
+<body>
     <style>
         body {
             display: grid;
@@ -72,70 +76,177 @@
             margin-bottom: 10px;
         }
 
-        #bouton {
+        .boutton {
             margin-top: 10px;
             margin-bottom: 10px;
         }
     </style>
-</head>
+    <h1>Créer ton propre Quizz !</h1>
+    <form action="submit.php" method="post">
+        <label for="question1">Votre premiere Question :</label>
+        <input type="text" id="question1" name="question1"><br><br>
+        <input type="radio" id="repA_1" name="reponse1_A" value="1">
+        <label for="repA_1">""</label><br>
+        <input type="radio" id="repB_1" name="reponse1_B" value="2">
+        <label for="repB_1">""</label><br>
+        <input type="radio" id="repC_1" name="reponse1_C" value="3">
+        <label for="repC_1">""</label><br>
+        <input type="radio" id="repD_1" name="reponse1_D" value="4">
+        <label for="repD_1">""</label><br>
+    </form>
 
-<body>
-    <h1>QUIZZ</h1>
-    <div id="questions-container">
-        <form action="submit.php" method="post" class="question-form">
-            <label for="user_name">Votre nom :</label>
-            <input type="text" id="user_name" name="name"><br><br>
-            <label for="question1">Votre premiere Question :</label>
-            <input type="text" id="question1" name="questions[]"><br><br>
-            <input type="radio" id="repA_1" name="rep_qts1" value="1">
-            <label for="repA_1">""</label><br>
-            <input type="radio" id="repB_1" name="rep_qts1" value="2">
-            <label for="repB_1">""</label><br>
-            <input type="radio" id="repC_1" name="rep_qts1" value="3">
-            <label for="repC_1">""</label><br>
-            <input type="radio" id="repD_1" name="rep_qts1" value="4">
-            <label for="repD_1">""</label><br>
-        </form>
-    </div>
-    <div id="bouton">
-        <button id="add-question-btn">Ajouter une question au QCM</button>
-        <button id="validate-btn">Valider le quizz</button>
-    </div>
+    <button id="id_qts1" onclick="addQCM()" class="boutton">Ajouter une question à la QCM</button>
+    <button class="boutton" id="valid_quizz1" onclick="gen_code1()" type="submit">Valider la question</button><br>
+
+    <input type="text" class="name" id="name1" name="name1" placeholder="Votre nom - ex : Mathieu" required
+        style="display: none"><br>
+    <button id="send_quizz1" class="boutton" onclick="gen_code1()" type="submit" style="display: none">Enregister la
+        question</button>
+
+
     <script>
-        var questionCounter = 1;
-
-        $("#add-question-btn").on("click", function () {
-            questionCounter++;
-            var newForm = `<form action="submit.php" method="post" class="question-form">
-                                <label for="question${questionCounter}">Votre ${getOrdinal(questionCounter)} Question :</label>
-                                <input type="text" id="question${questionCounter}" name="questions[]"><br><br>
-                                <input type="radio" id="repA_${questionCounter}" name="rep_qts${questionCounter}" value="1">
-                                <label for="repA_${questionCounter}">""</label><br>
-                                <input type="radio" id="repB_${questionCounter}" name="rep_qts${questionCounter}" value="2">
-                                <label for="repB_${questionCounter}">""</label><br>
-                                <input type="radio" id="repC_${questionCounter}" name="rep_qts${questionCounter}" value="3">
-                                <label for="repC_${questionCounter}">""</label><br>
-                                <input type="radio" id="repD_${questionCounter}" name="rep_qts${questionCounter}" value="4">
-                                <label for="repD_${questionCounter}">""</label><br>
-                            </form>`;
-            $("#questions-container").append(newForm);
-            if (questionCounter > 1) {
-                $("#validate-btn").show();
-            }
-        });
-
-        $("#validate-btn").on("click", function () {
-            var userName = $("#user_name").val();
-            var formData = $(".question-form").serializeArray();
-            formData.push({ name: "name", value: name });
-        });
-
-        function getOrdinal(n) {
-            var s = ["ème", "er", "ème", "ème"],
-                v = n % 100;
-            return n + (s[(v - 20) % 10] || s[v] || s[0]);
+        function addQCM() {
+            $("#form2").slideToggle();
+            $("#question2").show();
+            $("#id_qts2").show()
+            $("#valid_quizz1").hide()
+            $("#valid_quizz2").show()
+        }
+        function gen_code1() {
+            $("#name1").show()
+            $("#send_quizz1").show()
+            var bouton = document.getElementById('valid_quizz1');
+            bouton.innerHTML = "La question 1 a été validé !";
+            var boutton = document.getElementById('send_quizz4');
+            boutton.innerHTML = "La question 1 a été enregistrée !";
         }
     </script>
+
+
+    <form action="submit.php" method="post" id="form2" style="display: none">
+        <label for="question2">Votre deuixeme Question :</label>
+        <input type="text" id="question2" name="question2"><br><br>
+        <input type="radio" id="repA_2" name="reponse2_A" value="1">
+        <label for="repA_2">""</label><br>
+        <input type="radio" id="repB_2" name="reponse2_B" value="2">
+        <label for="repB_2">""</label><br>
+        <input type="radio" id="repC_2" name="reponse2_C" value="3">
+        <label for="repC_2">""</label><br>
+        <input type="radio" id="repD_2" name="reponse2_D" value="4">
+        <label for="repD_2">""</label><br>
+    </form>
+
+    <button id="id_qts2" class="boutton" onclick="addQTS()" style="display: none">Ajouter une question à la QCM</button>
+    <button id="valid_quizz2" class="boutton" onclick="gen_code2()" type="submit" style="display: none">Valider la
+        question</button><br>
+
+    <input type="text" class="name" id="name2" name="name" placeholder="Votre nom - ex : Mathieu"
+        style="display: none"><br>
+    <button id="send_quizz1" class="boutton" onclick="gen_code2()" type="submit" style="display: none">Enregister la
+        question</button>
+
+
+
+    <script>
+        function addQTS() {
+            $("#form3").slideToggle()
+            $("#question3").show()
+            $("#id_qts3").show()
+            $("#valid_quizz2").hide()
+            $("#valid_quizz3").show()
+
+        }
+        function gen_code2() {
+            $("#name2").show()
+            $("#send_quizz2").show()
+            var bouton = document.getElementById('valid_quizz2');
+            bouton.innerHTML = "La question 2 a été validé !";
+            var boutton = document.getElementById('send_quizz4');
+            boutton.innerHTML = "La question 2 a été enregistrée !";
+
+        }
+    </script>
+
+    <form action="submit.php" method="post" id="form3" style="display: none">
+        <label for="question3">Votre troisieme Question :</label>
+        <input type="text" id="question3" name="question3"><br><br>
+        <input type="radio" id="repA_3" name="reponse3_A" value="1">
+        <label for="repA_3">""</label><br>
+        <input type="radio" id="repB_3" name="reponse3_B" value="2">
+        <label for="repB_3">""</label><br>
+        <input type="radio" id="repC_3" name="reponse3_C" value="3">
+        <label for="repC_3">""</label><br>
+        <input type="radio" id="repD_3" name="reponse3_D" value="4">
+        <label for="repD_3">""</label><br>
+    </form>
+
+    <button id="id_qts3" class="boutton" onclick="addQT()" style="display: none">Ajouter une question à la QCM</button>
+    <button id="valid_quizz3" class="boutton" onclick="gen_code3()" style="display: none">Valider la
+        question</button><br>
+
+    <input type="text" class="name" id="name3" name="name" placeholder="Votre nom - ex : Mathieu"
+        style="display: none"><br>
+    <button id="send_quizz1" class="boutton" onclick="gen_code3()" type="submit" style="display: none">Enregister la
+        question</button>
+
+
+
+    <script>
+        function addQT() {
+            $("#form4").slideToggle()
+            $("#question4").show()
+            $("#id_qts4").show()
+            $("#valid_quizz3").hide()
+            $("#valid_quizz4").show()
+        }
+        function gen_code3() {
+            $("#name3").show()
+            $("#send_quizz3").show()
+            var bouton = document.getElementById('valid_quizz3');
+            bouton.innerHTML = "La question 3 a été validé !";
+            var boutton = document.getElementById('send_quizz4');
+            boutton.innerHTML = "La question 3 a été enregistrée !";
+        }
+    </script>
+
+    <form action="submit.php" method="post" id="form4" style="display: none">
+        <label for="question4">Votre quatrieme Question :</label>
+        <input type="text" id="question4" name="question4"><br><br>
+        <input type="radio" id="repA_4" name="reponse4_A" value="1">
+        <label for="repA_4">""</label><br>
+        <input type="radio" id="repB_4" name="reponse4_B" value="2">
+        <label for="repB_4">""</label><br>
+        <input type="radio" id="repC_4" name="reponse4_C" value="3">
+        <label for="repC_4">""</label><br>
+        <input type="radio" id="repD_4" name="reponse4_D" value="4">
+        <label for="repD_4">""</label><br>
+    </form>
+
+    <button id="id_qts4" class="boutton" onclick="addQCM()" style="display: none">Ajouter une question à la QCM</button>
+    <button id="valid_quizz4" class="boutton" onclick="gen_code4()" type="submit" style="display: none">Valider la
+        question</button><br>
+
+
+    <input type="text" class="name" id="name4" name="name" placeholder="Votre nom - ex : Mathieu"
+        style="display: none"><br>
+    <button id="send_quizz1" class="boutton" onclick="gen_code4()" type="submit" style="display: none">Enregister la
+        question</button>
+    <script>
+        function gen_code4() {
+            $("#name4").show()
+            $("#send_quizz4").show()
+            var bouton = document.getElementById('valid_quizz4');
+            bouton.innerHTML = "La question 4 a été validé !";
+            var boutton = document.getElementById('send_quizz4');
+            boutton.innerHTML = "La question 4 a été enregistrée !";
+        }
+
+    </script>
+
+
+
+
+
 </body>
 
 </html>
